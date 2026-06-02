@@ -1,0 +1,14 @@
+# Block downloaded code packages
+node_modules/
+
+# Block private security keys and credentials
+.env
+.env.local
+
+# Block local compiled production bundles
+dist/
+build/
+
+# Block operating system garbage logs
+.DS_Store
+thumbs.db

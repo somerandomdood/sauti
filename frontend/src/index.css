@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .glass-input { 
+      @apply bg-white/5 border border-white/10 text-white transition-all duration-200;
+  }
+  .glass-input:focus, .glass-btn:focus-visible { 
+      @apply outline-none bg-white/10 border-brand-500 ring-2 ring-brand-500/20;
+  }
+  .error-ring { 
+      @apply border-red-500 bg-red-500/5 focus:border-red-500 focus:ring-red-500/20; 
+  }
+}
+
+body {
+  background: linear-gradient(-45deg, #020617, #0f172a, #064e3b, #020617);
+  background-size: 400% 400%;
+  animation: ambientDrift 20s ease infinite;
+}
+
+@keyframes ambientDrift { 
+  0% { background-position: 0% 50%; } 
+  50% { background-position: 100% 50%; } 
+  100% { background-position: 0% 50%; } 
+}
+
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #0f172a inset !important;
+  -webkit-text-fill-color: white !important;
+}
