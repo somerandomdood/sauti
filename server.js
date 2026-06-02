@@ -26,9 +26,6 @@ const io = new Server(server, {
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sauti_studio_secure_key_2026';
 
-// -------------------------------------------------------------------------
-// DATABASE SCHEMAS
-// -------------------------------------------------------------------------
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('MongoDB Atlas Live Core Engine Operational'))
     .catch(err => console.error('Database instantiation error:', err));
@@ -67,7 +64,6 @@ const ArtistSchema = new mongoose.Schema({
 ArtistSchema.index({ location: '2dsphere' });
 const Artist = mongoose.model('Artist', ArtistSchema);
 
-// NEW SCHEMA: Real Scout Data Profile Storage Table
 const Scout = mongoose.model('Scout', new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
     name: { type: String, required: true },
@@ -96,9 +92,7 @@ const Message = mongoose.model('Message', new mongoose.Schema({
     timestamp: { type: Date, default: Date.now }
 }));
 
-// -------------------------------------------------------------------------
-// SECURITY GATES MIDDLEWARE
-// -------------------------------------------------------------------------
+
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -125,9 +119,7 @@ const fetchMpesaToken = async (req, res, next) => {
     }
 };
 
-// -------------------------------------------------------------------------
-// BACKEND API ENDPOINTS
-// -------------------------------------------------------------------------
+
 app.post('/api/auth/register', async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
@@ -209,7 +201,7 @@ app.put('/api/artists/profile', verifyToken, async (req, res) => {
     } catch (err) { res.status(400).json({ error: err.message }); }
 });
 
-// NEW PIPELINES: Get and Save Producer/Scout Profiles
+
 app.get('/api/scouts/profile', verifyToken, async (req, res) => {
     try {
         let profile = await Scout.findOne({ userId: req.user.id });
@@ -325,18 +317,14 @@ app.post('/api/booking/pay', verifyToken, fetchMpesaToken, async (req, res) => {
     } catch (err) { res.status(500).json({ error: "M-Pesa payment gateway error." }); }
 });
 
-// -------------------------------------------------------------------------
-// FRONTEND PRODUCTION ROUTING LAYERS
-// -------------------------------------------------------------------------
+
 app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
 
 app.get(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
 });
 
-// -------------------------------------------------------------------------
-// SOCKET ENGINE Handshaking
-// -------------------------------------------------------------------------
+
 io.on('connection', (socket) => {
     socket.on('join_room', (data) => { socket.join(data.roomId); });
     socket.on('send_message', async (data) => {
