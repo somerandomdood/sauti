@@ -7,12 +7,11 @@ export default function ScoutOnboarding() {
   const [scoutName, setScoutName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState({ show: false, msg: '', type: '' });
-const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const [form, setForm] = useState({
     studioName: '',
     scoutType: 'Independent Producer',
-    preferredGenres: '',
     lookingFor: '',
     bio: ''
   });
@@ -33,7 +32,7 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSetupSubmit = async (e) => {
     e.preventDefault();
-    if (!form.studioName || !form.preferredGenres || !form.lookingFor || !form.bio.trim()) {
+    if (!form.studioName || !form.lookingFor || !form.bio.trim()) {
       showAlert('Please fill out all fields to complete your profile.', 'error');
       return;
     }
@@ -60,7 +59,6 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   return (
     <div className="min-h-screen flex items-center justify-center p-4 antialiased relative overflow-hidden">
       
-      {/* Background Glows */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-500/10 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -77,7 +75,6 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
         <form onSubmit={handleSetupSubmit} className="space-y-6">
           
-          {/* Studio or Record Label Name */}
           <div>
             <label className="block text-[11px] font-bold text-gray-400 mb-2 uppercase tracking-wider">Studio / Label Name</label>
             <input 
@@ -89,45 +86,43 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
             />
           </div>
 
-          {/* Scout Focus Type */}
           <div className="relative">
-  <label className="block text-[11px] font-bold text-gray-400 mb-2 uppercase tracking-wider">What is your primary title?</label>
-  <button 
-    type="button" 
-    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-    className="glass-input glass-btn w-full flex justify-between items-center rounded-xl py-3.5 px-4 text-left text-sm text-gray-200 border border-white/10 hover:border-brand-500 transition-all focus:border-brand-400 focus:ring-1 focus:ring-brand-400 outline-none"
-  >
-    <span className="font-semibold">{form.scoutType}</span>
-    <span className={`text-[10px] transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}>▼</span>
-  </button>
-  
-  {isDropdownOpen && (
-    <ul className="absolute left-0 w-full mt-2 bg-[#0e0f14]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 divide-y divide-white/5 animate-[fadeIn_0.15s_ease-out]">
-      {[
-        'Independent Producer',
-        'Record Label Executive',
-        'Talent Manager / Agent',
-        'Commercial / Jingle Director'
-      ].map(option => (
-        <li key={option}>
-          <button 
-            type="button" 
-            onClick={() => { 
-              setForm({ ...form, scoutType: option }); 
-              setIsDropdownOpen(false); 
-            }} 
-            className={`w-full text-left px-4 py-3.5 text-xs font-semibold transition-colors flex items-center justify-between ${form.scoutType === option ? 'bg-brand-500/15 text-brand-400' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
-          >
-            <span>{option}</span>
-            {form.scoutType === option && <span className="text-[10px]">●</span>}
-          </button>
-        </li>
-      ))}
-    </ul>
-  )}
-</div>
+            <label className="block text-[11px] font-bold text-gray-400 mb-2 uppercase tracking-wider">What is your primary title?</label>
+            <button 
+              type="button" 
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="glass-input glass-btn w-full flex justify-between items-center rounded-xl py-3.5 px-4 text-left text-sm text-gray-200 border border-white/10 hover:border-brand-500 transition-all focus:border-brand-400 focus:ring-1 focus:ring-brand-400 outline-none"
+            >
+              <span className="font-semibold">{form.scoutType}</span>
+              <span className={`text-[10px] transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : 'rotate-0'}`}>▼</span>
+            </button>
+            
+            {isDropdownOpen && (
+              <ul className="absolute left-0 w-full mt-2 bg-[#0e0f14]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-50 divide-y divide-white/5 animate-[fadeIn_0.15s_ease-out]">
+                {[
+                  'Independent Producer',
+                  'Record Label Executive',
+                  'Talent Manager / Agent',
+                  'Commercial / Jingle Director'
+                ].map(option => (
+                  <li key={option}>
+                    <button 
+                      type="button" 
+                      onClick={() => { 
+                        setForm({ ...form, scoutType: option }); 
+                        setIsDropdownOpen(false); 
+                      }} 
+                      className={`w-full text-left px-4 py-3.5 text-xs font-semibold transition-colors flex items-center justify-between ${form.scoutType === option ? 'bg-brand-500/15 text-brand-400' : 'text-gray-400 hover:bg-white/5 hover:text-white'}`}
+                    >
+                      <span>{option}</span>
+                      {form.scoutType === option && <span className="text-[10px]">●</span>}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
-          {/* Specific Talent Needs */}
           <div>
             <label className="block text-[11px] font-bold text-gray-400 mb-2 uppercase tracking-wider">What talent do you need right now?</label>
             <input 
@@ -139,11 +134,9 @@ const [isDropdownOpen, setIsDropdownOpen] = useState(false);
             />
           </div>
 
-          {/* Professional Bio */}
           <div>
             <div className="flex justify-between items-center mb-2">
               <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-wider">About Your Projects</label>
-        
             </div>
             <textarea 
               rows="3"
