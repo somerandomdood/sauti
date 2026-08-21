@@ -11,6 +11,7 @@ export default function Onboarding() {
   const [form, setForm] = useState({
     role: '',
     genre: 'Gengetone',
+    pricePerHour: '',
     description: ''
   });
 
@@ -30,7 +31,7 @@ export default function Onboarding() {
 
   const handleSetupSubmit = async (e) => {
     e.preventDefault();
-    if (!form.role || !form.description.trim()) {
+    if (!form.role || !form.pricePerHour || !form.description.trim()) {
       showAlert('Please fill out all fields to complete your profile.', 'error');
       return;
     }
